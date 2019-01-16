@@ -7,7 +7,7 @@ Authors@R: c(
     )
 Maintainer: Joseph Stachelek <stachel2@msu.edu>
 Description: Uses the RSudio and mapview to view spatial data.
-Depends: R (>= 3.5.1)
+Depends: R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -18,7 +18,8 @@ Imports:
     rstudioapi (>= 0.8),
     sf (>= 0.7-1),
     shiny (>= 1.2.0),
-    shinyWidgets (>= 0.4.4)
+    shinyWidgets (>= 0.4.4),
+    shinydashboard
 Suggests: 
     testthat
 RoxygenNote: 6.1.1

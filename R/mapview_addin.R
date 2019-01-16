@@ -1,85 +1,54 @@
-
-
-
 #' @title mapview Addin
 #' @description View spatial objects within the Rstudio IDE
 #'
 #' @return sf object
 #' @importFrom miniUI miniPage miniContentPanel gadgetTitleBar miniButtonBlock
-#' @importFrom shiny callModule paneViewer observeEvent stopApp runGadget textInput updateTextInput div
+#' @importFrom shiny callModule paneViewer observeEvent stopApp runGadget textInput updateTextInput div fluidPage mainPanel shinyServer
 #' @importFrom shinyWidgets switchInput updateSwitchInput
 #' @importFrom mapview mapview
-#' @importFrom leaflet setView
+#' @importFrom shinydashboard dashboardHeader dashboardSidebar dashboardBody dashboardPage
+#' @importFrom leaflet setView leafletOutput renderLeaflet
 #' @importFrom rstudioapi getActiveDocumentContext
 #' @export
 mapviewAddin <- function() {
 
-  ui <- miniPage(
-    gadgetTitleBar("Edit Map"),
-    miniContentPanel(
-      editModUI("editor"),
-      miniButtonBlock(
-        div(style="display: inline-block;padding-top:22px;padding-left:30px;width:180px;",
-            switchInput('savefile', 'Save', value = FALSE, onStatus = "success", offStatus = "danger")),
-        div(style="display: inline-block; width: 400px;",
-            textInput('filename', '', value = 'saved_geometry.geojson')),
-        div(style="display: inline-block;padding-top:18px;width: 400px;font-size: 10pt;color: #313844;",
-            'You can add folders and change output type.',
-            'Created geometry will always save to .GlobalEnv')
-      )
-    )
+  body <- dashboardBody(
+    # Define UI for application
+    fluidPage(
+      mainPanel(
+        leafletOutput("mapplot"),
+        mapview::mapviewOutput("test")
+      ))
   )
 
-  server <- function(input, output, session) {
+  ui <- dashboardPage(dashboardHeader(), dashboardSidebar(), body,
+                      skin = "black")
 
-    # get values from rstudio
+  server <- shinyServer(function(input, output, session) {
     ct <- getActiveDocumentContext()
 
-    TEXT <- ct$selection[[1]]$text
+    TEXT       <- ct$selection[[1]]$text
     OBJECTNAME <- ifelse(TEXT == '', 'geom', TEXT)
-    FILENAME <- ifelse(TEXT == '', 'saved_geometry.geojson', paste0(TEXT, '.geojson'))
-    SF_OBJECT <- NULL
+    SF_OBJECT  <- NULL
 
     # test selected text an sf object
     try({
-      SF_OBJECT <- get(TEXT)
-      if (class(SF_OBJECT) != 'sf') {SF_OBJECT <- NULL}
+      SF_OBJECT <- base::get(TEXT)
+      if(!('sf' %in% class(SF_OBJECT))) {
+        SF_OBJECT <- NULL
+        }
     })
 
-    # update UI based on inputs
-    updateTextInput(session, 'filename', value = FILENAME)
-    if (FILENAME != 'saved_geometry.geojson') {
-      updateSwitchInput(session, 'savefile', value = TRUE)
+    if('sf' %in% class(SF_OBJECT)){
+      m <- mapview(SF_OBJECT)
+      output$mapplot <- renderLeaflet({m@map})
     }
 
-
-    # load mapedit
-    if (class(SF_OBJECT) == 'sf') {
-      geo <- callModule(editMod, "editor", mapview(SF_OBJECT)@map)
-    } else {
-      geo <- callModule(editMod, "editor", setView(mapview()@map, 80, 0, 3))
-    }
-
-
-    # return geometry to file and object in .GlobalEnv
-    observeEvent(input$done, {
-      geom <- geo()$finished
-
-      if (!is.null(geom) & !is.null(SF_OBJECT)) geom <- rbind(SF_OBJECT, geom)
-
-      if (!is.null(geom)) {
-        assign(OBJECTNAME, geom, envir = .GlobalEnv)
-        if (input$savefile) {
-          sf::write_sf(geom, input$filename, delete_layer = TRUE, delete_dsn = TRUE)
-        }
-      }
-
+    session$onSessionEnded(function() {
       stopApp()
     })
-
-  }
+  })
 
   viewer <- paneViewer(600)
   runGadget(ui, server, viewer = viewer)
 }
-
