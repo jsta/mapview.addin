@@ -8,7 +8,7 @@
 Status](https://travis-ci.org/jsta/mapview.addin.svg?branch=master)](https://travis-ci.org/jsta/mapview.addin)
 
 The goal of `mapview.addin` is to allow for the creation of a keyboard
-shortcut for fasting viewing of spatial data in RStudio.
+shortcut for fast viewing of spatial data in RStudio.
 
 ## Installation
 
@@ -21,9 +21,10 @@ devtools::install_github("jsta/mapview.addin")
 
 ## Usage
 
-It possible to link `mapview.addin` to keyboard shortcuts, further
-simplifying the process (see
-[here](https://rstudio.github.io/rstudioaddins/#keyboard-shorcuts)).
+Set `mapview.addin::mapviewAddin` to a keyboard shortcut, select a
+spatial object in the RStudio editor, and press the keyboard shortcut.
+For help, see this page on setting RStudio [keyboard
+shortcuts](https://rstudio.github.io/rstudioaddins/#keyboard-shorcuts).
 
 ## Prior art
 
