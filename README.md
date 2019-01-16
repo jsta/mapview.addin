@@ -24,3 +24,7 @@ devtools::install_github("jsta/mapview.addin")
 It possible to link `mapview.addin` to keyboard shortcuts, further
 simplifying the process (see
 [here](https://rstudio.github.io/rstudioaddins/#keyboard-shorcuts)).
+
+## Prior art
+
+<https://github.com/mrjoh3/mapedit.addin>
