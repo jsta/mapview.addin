@@ -1,19 +1,18 @@
-Package: mapedit.addin
-Title: RStudio Addin for the mapedit package
+Package: mapview.addin
+Title: RStudio Addin for the mapview package
 Version: 0.1.0
 Authors@R: c(
-    person("Matt", "Johnson", email = "mrjoh3@gmail.com",
+    person("Joseph", "Stachelek", email = "stachel2@msu.edu",
     role = c("aut", "cre"))
     )
-Maintainer: Matt Johnson <mrjoh3@gmail.com>
-Description: Uses the RSudio and mapedit GUI's to create spatial data.
+Maintainer: Joseph Stachelek <stachel2@msu.edu>
+Description: Uses the RSudio and mapview to view spatial data.
 Depends: R (>= 3.5.1)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
     leaflet,
-    mapedit,
     mapview,
     miniUI (>= 0.1.1.1),
     rstudioapi (>= 0.8),

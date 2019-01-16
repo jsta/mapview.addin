@@ -1,4 +1,4 @@
 library(testthat)
-library(mapedit.addin)
+library(mapview.addin)
 
-test_check("mapedit.addin")
+test_check("mapview.addin")

@@ -1,22 +1,18 @@
 
 
 
-#' @title mapedit Addin
-#' @description Create and save spatial objects within the Rstudio IDE
+#' @title mapview Addin
+#' @description View spatial objects within the Rstudio IDE
 #'
 #' @return sf object
 #' @importFrom miniUI miniPage miniContentPanel gadgetTitleBar miniButtonBlock
-#' @import mapedit
 #' @importFrom shiny callModule paneViewer observeEvent stopApp runGadget textInput updateTextInput div
 #' @importFrom shinyWidgets switchInput updateSwitchInput
 #' @importFrom mapview mapview
-#' @importFrom sf write_sf st_intersection
 #' @importFrom leaflet setView
 #' @importFrom rstudioapi getActiveDocumentContext
 #' @export
-#'
-#' @examples
-mapeditAddin <- function() {
+mapviewAddin <- function() {
 
   ui <- miniPage(
     gadgetTitleBar("Edit Map"),
@@ -85,6 +81,5 @@ mapeditAddin <- function() {
 
   viewer <- paneViewer(600)
   runGadget(ui, server, viewer = viewer)
-
 }
 
