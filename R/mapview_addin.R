@@ -2,9 +2,7 @@
 #' @description View spatial objects within the Rstudio IDE
 #'
 #' @return sf object
-#' @importFrom miniUI miniPage miniContentPanel gadgetTitleBar miniButtonBlock
 #' @importFrom shiny callModule paneViewer observeEvent stopApp runGadget textInput updateTextInput div fluidPage mainPanel shinyServer
-#' @importFrom shinyWidgets switchInput updateSwitchInput
 #' @importFrom mapview mapview
 #' @importFrom shinydashboard dashboardHeader dashboardSidebar dashboardBody dashboardPage
 #' @importFrom leaflet setView leafletOutput renderLeaflet
