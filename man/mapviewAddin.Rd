@@ -12,3 +12,11 @@ sf object
 \description{
 View spatial objects within the Rstudio IDE
 }
+\examples{
+\dontrun{
+library(sf)
+fname <- system.file("shape/nc.shp", package="sf")
+dt <- st_read(fname)
+dt
+}
+}

@@ -8,10 +8,15 @@
 #' @importFrom leaflet setView leafletOutput renderLeaflet
 #' @importFrom rstudioapi getActiveDocumentContext
 #' @export
+#' @examples \dontrun{
+#' library(sf)
+#' fname <- system.file("shape/nc.shp", package="sf")
+#' dt <- st_read(fname)
+#' dt
+#' }
 mapviewAddin <- function() {
 
   body <- dashboardBody(
-    # Define UI for application
     fluidPage(
       mainPanel(
         leafletOutput("mapplot"),
@@ -33,7 +38,9 @@ mapviewAddin <- function() {
     try({
       SF_OBJECT <- base::get(TEXT)
       if(!('sf' %in% class(SF_OBJECT))) {
-        SF_OBJECT <- NULL
+        message(paste0("selected object is not Spatial but is of class: ",
+                       class(SF_OBJECT)))
+        stopApp()
         }
     })
 
